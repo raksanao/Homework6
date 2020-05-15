@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue="com/zerobanking/step_definitions",
         dryRun=false,
-        tags="@new_payee @smoke",
+        tags="@curency",
 
         plugin = {"html:target/default-cucumber-reports",
         "rerun:target/rerun.txt",

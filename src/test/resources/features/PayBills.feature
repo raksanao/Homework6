@@ -1,4 +1,4 @@
-
+@payee
 Feature: Pay Bills
 
   Background:
@@ -10,13 +10,13 @@ Feature: Pay Bills
   Scenario: User completes a successful Pay operation
     And User should pay saved payee with following:
       | Payee       | Wells Fargo      |
-      | Account     | Loan          |
+      | Account     | Loan             |
       | Amount      | 2000             |
       | Date        | 2021-04-17       |
       | Description | This description |
     And User should click pay button
-    Then "The payment was successfully submitted." should be displayed
 
+    Then The success "The payment was successfully submitted." should be displayed
   Scenario: user tries to make a payment without entering the amount or date
     And User puts following:
       | Payee       | Wells Fargo      |

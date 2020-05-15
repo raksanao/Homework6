@@ -7,7 +7,6 @@ Feature: Account summary page
 
 
   Scenario: Account type
-   # Given user is on the login page
     Given the user is logged in
     When user logs in with valid credentials
     Then the user should see following account types

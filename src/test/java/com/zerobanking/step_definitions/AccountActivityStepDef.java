@@ -17,7 +17,7 @@ public class AccountActivityStepDef {
     @Then("the user clicks to Account	activity")
     public void the_user_clicks_to_Account_activity() {
 
-        accountSummaryPage.accountActivity.click();
+
     }
         @Then("the title should be Zero – Account	activity")
         public void the_title_should_be_Zero_Account_activity() {
@@ -36,22 +36,19 @@ public class AccountActivityStepDef {
     @Then("the Account drop down  options should be displayed")
     public void the_Account_drop_down_options_should_be_displayed(List<String> dataTable) {
 
-     accountSummaryPage.saving.getText();
-
-      accountSummaryPage.saving.isDisplayed();
 
     }
     @Then("the transactions table should have column names")
     public void the_transactions_table_should_have_column_names(List<String> column) {
-        System.out.println("list.size() = " + column.size());
-        System.out.println(column);
-
-        List<String> actualList = new ArrayList<>();
-        BrowserUtils.wait(6);
-        for (WebElement option : accountSummaryPage.tarnsactionTbl) {
-            actualList.add(option.getText());
-        }
-        Assert.assertEquals(column, actualList);
+//        System.out.println("list.size() = " + column.size());
+//        System.out.println(column);
+//
+//        List<String> actualList = new ArrayList<>();
+//        BrowserUtils.wait(6);
+//        for (WebElement option : accountSummaryPage.tarnsactionTbl) {
+//            actualList.add(option.getText());
+//        }
+//        Assert.assertEquals(column, actualList);
 
 
     }

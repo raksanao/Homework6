@@ -2,6 +2,7 @@ package com.zerobanking.step_definitions;
 
 import com.zerobanking.pages.AccountSummaryPage;
 import com.zerobanking.pages.LoginPage;
+import com.zerobanking.pages.PayBillsPage;
 import com.zerobanking.utilities.BrowserUtils;
 import com.zerobanking.utilities.Driver;
 
@@ -9,80 +10,65 @@ import io.cucumber.java.en.Then;
 import org.junit.Assert;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
 import java.util.Map;
 
 
 public class PayBillsStepDef {
-    LoginPage loginPage = new LoginPage();
 
+    PayBillsPage payBills = new PayBillsPage();
 
     @Then("User navigates to {string}")
-    public void user_navigates_to(String payBills) {
-      loginPage.navigateTo( payBills);
+    public void user_navigates_to(String page) {
+        payBills.navigateTo(page);
     }
-    @Then("Page title should be {string}")
-    public void page_title_should_be(String title) {
 
+    @Then("Page title should be {string}")
+    public void page_title_should_be(String string) {
+        BrowserUtils.wait(2);
         System.out.println("Verify that title is a Zero – Pay Bills");
         BrowserUtils.waitForPageToLoad(10);
        BrowserUtils.wait(2);
-        Assert.assertEquals(title, Driver.getDriver().getTitle());
-
+        Assert.assertEquals("Zero - Pay Bills", Driver.getDriver().getTitle());
 
     }
 
-    @Then("User should pay saved payee with following:")
+
+        @Then("User should pay saved payee with following:")
     public void user_should_pay_saved_payee_with_following(Map<String,String> dataTable) {
-        AccountSummaryPage accountSummaryPage = new AccountSummaryPage();
-        Select select = new Select(accountSummaryPage.payee);
-        select.selectByVisibleText(dataTable.get("Payee"));
-        BrowserUtils.wait(3);
-        Select select1 = new Select(accountSummaryPage.accountOfPay);
-        select1.selectByVisibleText(dataTable.get("Account"));
-
-        BrowserUtils.wait(4);
-        accountSummaryPage.amount.sendKeys(dataTable.get("Amount"));
-        BrowserUtils.wait(5);
-        accountSummaryPage.date.sendKeys(dataTable.get("Date"));
-        accountSummaryPage.discription.sendKeys(dataTable.get("Description"));
-
+        payBills.selectPayee(dataTable.get("Payee"));
+        payBills.selectAccount(dataTable.get("Account"));
+        payBills.putAmount(dataTable.get("Amount"));
+        payBills.putDate(dataTable.get("Date"));
+        payBills.putDescription(dataTable.get("Description"));
     }
-
 
     @Then("User should click pay button")
-   public void user_should_click_pay_button() {
-        AccountSummaryPage accountSummaryPage=new AccountSummaryPage();
-        accountSummaryPage.pay.click();
-        BrowserUtils.wait(9);
+    public void user_should_click_pay_button() {
+        payBills.clickPay();
+    }
+
+    @Then("The success {string} should be displayed")
+    public void the_success_should_be_displayed(String message) {
+        Assert.assertTrue(payBills.getSuccessMessage(message).isDisplayed());
     }
 
 
-   @Then("{string} should be displayed")
-    public void should_be_displayed(String paymentSuccess) {
-       AccountSummaryPage accountSummaryPage=new AccountSummaryPage();
-       String peymentConfirm=accountSummaryPage.alart.getText();
-       Assert.assertEquals(peymentConfirm,"The payment was successfully submitted.");
-       accountSummaryPage.alart.isDisplayed();
-
-
-    }
     @Then("User puts following:")
     public void user_puts_following(Map<String,String> dataTable) {
-        AccountSummaryPage accountSummaryPage = new AccountSummaryPage();
-        Select select = new Select(accountSummaryPage.payee);
-        select.selectByVisibleText(dataTable.get("Payee"));
-        BrowserUtils.wait(3);
-        Select select1 = new Select(accountSummaryPage.accountOfPay);
-        select1.selectByVisibleText(dataTable.get("Account"));
-        accountSummaryPage.discription.sendKeys(dataTable.get("Description"));
+        payBills.selectPayee(dataTable.get("Payee"));
+        payBills.selectAccount(dataTable.get("Account"));
+        payBills.putDescription(dataTable.get("Description"));
+    }
 
-/*this part not done yet *When	user	tries	to	make	a	payment	without	entering	the	amount	or	date,
-Please	fill	out	this	field	message! should	be	displayed.
-Amount	field	should	not	accept	alphabetical	or	special	characters.	Date	field	should
-not	accept	alphabetical	characters.	*/
+    @Then("{string} should be displayed")
+    public void should_be_displayed(String message) {
+        Assert.assertEquals(payBills.getSummary(),message);
 
 
     }
+    }
+
 
 
 
@@ -140,4 +126,4 @@ not	accept	alphabetical	characters.	*/
 ////    }
 //
 
-}
+
