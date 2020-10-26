@@ -63,5 +63,6 @@ public class AccountSummaryPage extends LoginPage {
             BrowserUtils.waitForPageToLoad(20);
             return BrowserUtils.getTextFromWebElements(accountTypes);
         }
+    //just comment
 
 }
